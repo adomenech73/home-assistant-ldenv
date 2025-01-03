@@ -1,0 +1,71 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    ports:
+      - "8123:8123"
+    volumes:
+      - ./ha/config/configuration.yaml:/config/configuration.yaml:ro
+      - ./ha/config/automations.yaml:/config/automations.yaml:ro
+      - ./ha/config/scenes.yaml:/config/scenes.yaml:ro
+      - ./ha/config/scripts.yaml:/config/scripts.yaml:ro
+      - ./ha/config/secrets.yaml:/config/secrets.yaml:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    networks:
+      - homeassistant_network
+    restart: unless-stopped
+    privileged: true
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mqtt/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./mqtt/data:/mosquitto/data
+      - ./mqtt/log:/mosquitto/log
+    networks:
+      - homeassistant_network
+  ecowitt2mqtt:
+    image: bachya/ecowitt2mqtt
+    restart: unless-stopped
+    ports:
+      - 4199:4199/udp
+    networks:
+      - homeassistant_network
+    environment:
+      - ECOWITT_PORT=4199
+      - MQTT_BROKER=mosquitto.homeassistant_network
+      - MQTT_PORT=1883
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - "8086:8086"
+    networks:
+      - homeassistant_network
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - ./grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - homeassistant_network
+  weather_emulator:
+    build: ./weather_emulator
+    environment:
+      - MQTT_BROKER=mosquitto.homeassistant_network
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=weather/custom
+      - TEMP_MIN=-5
+      - TEMP_MAX=35
+      - UPDATE_FREQUENCY=30
+    networks:
+      - homeassistant_network
+networks:
+  homeassistant_network:
+    driver: bridge
