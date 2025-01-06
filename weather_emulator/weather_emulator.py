@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 
 # MQTT Configuration
-MQTT_BROKER = os.getenv("MQTT_BROKER", "mosquitto")
+MQTT_BROKER = os.getenv("MQTT_BROKER", "localhost")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 MQTT_TOPIC = os.getenv("MQTT_TOPIC", "weather/sainlogic")
 
