@@ -48,9 +48,9 @@ services:
       - homeassistant_network
     environment:
       - ECOWITT2MQTT_PORT=4199
-      - ECOWITT2MQTT_MQTT_BROKER=mosquitto.homeassistant_network
+      - ECOWITT2MQTT_MQTT_BROKER=mosquitto
       - ECOWITT2MQTT_MQTT_PORT=1883
-      - ECOWITT2MQTT_MQTT_TOPIC=weather/custom
+      - ECOWITT2MQTT_MQTT_TOPIC=weather/sainlogic
       - ECOWITT2MQTT_HASS_DISCOVERY=true
     depends_on:
       mosquitto:
@@ -93,12 +93,12 @@ services:
   weather_emulator:
     build: ./weather_emulator
     environment:
-      - MQTT_BROKER=mosquitto.homeassistant_network
+      - MQTT_BROKER=mosquitto
       - MQTT_PORT=1883
       - MQTT_TOPIC=weather/sainlogic
       - TEMP_MIN=-5
       - TEMP_MAX=35
-      - UPDATE_FREQUENCY=30
+      - UPDATE_FREQUENCY=15
     networks:
       - homeassistant_network
     depends_on:
