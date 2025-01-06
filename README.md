@@ -13,10 +13,61 @@ This project sets up a local development environment for Home Assistant, allowin
 
 ## Prerequisites
 
+- Git
 - Docker
 - Docker Compose
 
 ## Setup
+
+### Install requirements
+
+#### macOS
+
+```bash
+brew install git
+brew install --cask docker
+```
+
+#### Linux
+
+```bash
+sudo apt-get update
+sudo apt-get install git docker.io docker-compose
+```
+
+#### Windows
+
+It's recommended to use Chocolatey to install dependencies like Git on Windows.
+
+- Install Chocolatey:
+Open PowerShell as an Administrator and run:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+```
+
+- Install Git using Chocolatey:
+After Chocolatey is installed, run:
+
+```powershell
+choco install git -y
+```
+
+- Install Docker Desktop:
+You can also use Chocolatey to install Docker Desktop:
+
+```powershell
+choco install docker-desktop -y
+```
+
+- Verify the installations:
+
+```powershell
+git --version
+docker --version
+```
+
+### Start composition
 
 1. Clone this repository:
 ```bash
