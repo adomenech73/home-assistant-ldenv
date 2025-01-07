@@ -1,5 +1,7 @@
 # Home Assistant Local Development Environment
 
+![Components diagram](diagram.png)
+
 This project sets up a local development environment for Home Assistant, allowing integration with various devices and services. It uses Docker Compose to orchestrate multiple containers, providing a comprehensive setup for testing and development.
 
 ## Components

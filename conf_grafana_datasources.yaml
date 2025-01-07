@@ -4,7 +4,7 @@ datasources:
     type: influxdb
     access: proxy
     url: http://influxdb:8086
-    database: your_database_name
-    user: your_username
-    password: your_password
-    isDefault: true
+    user: my-user
+    password: my-password
+    database: my-bucket
+    orgName: my-org
