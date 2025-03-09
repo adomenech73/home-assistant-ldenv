@@ -41,7 +41,7 @@ services:
     image: bachya/ecowitt2mqtt
     restart: unless-stopped
     ports:
-      - 4199:4199/udp
+      - 0.0.0.0:4199:4199/udp
     networks:
       - homeassistant_network
     environment:
